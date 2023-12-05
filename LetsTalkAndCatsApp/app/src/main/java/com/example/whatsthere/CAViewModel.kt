@@ -9,12 +9,14 @@ import com.example.whatsthere.data.COLLECTION_CHAT
 import com.example.whatsthere.data.COLLECTION_MESSAGES
 import com.example.whatsthere.data.COLLECTION_STATUS
 import com.example.whatsthere.data.COLLECTION_USER
+import com.example.whatsthere.data.CatImage
 import com.example.whatsthere.data.ChatData
 import com.example.whatsthere.data.ChatUser
 import com.example.whatsthere.data.Event
 import com.example.whatsthere.data.Message
 import com.example.whatsthere.data.Status
 import com.example.whatsthere.data.UserData
+import com.example.whatsthere.ui.CatApiClient.catApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,7 +25,6 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.lang.Exception
 import java.util.Calendar
 import java.util.UUID
 import javax.inject.Inject
@@ -389,6 +390,8 @@ class CAViewModel @Inject constructor(
 
             }
     }
+
+
 // For popUp error test
 //    init {
 //        handleException(customMessage = "Test")

@@ -3,19 +3,20 @@ package com.example.whatsthere.ui
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -35,12 +36,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.whatsthere.CAViewModel
 import com.example.whatsthere.CommonDivider
 import com.example.whatsthere.CommonImage
 import com.example.whatsthere.CommonProgressSpinner
 import com.example.whatsthere.DestinationScreen
+import com.example.whatsthere.data.CatImage
 import com.example.whatsthere.navigateTo
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun ProfileScreen(navController: NavController, vm: CAViewModel) {
@@ -56,6 +60,8 @@ fun ProfileScreen(navController: NavController, vm: CAViewModel) {
 
         val scrollState = rememberScrollState()
         val focus = LocalFocusManager.current
+
+        val catImages = runBlocking { getCatImages() }
 
         Column {
             ProfileContent(
@@ -83,6 +89,12 @@ fun ProfileScreen(navController: NavController, vm: CAViewModel) {
 
             )
 
+            LazyColumn {
+                items(catImages) { catImage ->
+                    CatImageItem(catImage)
+                }
+            }
+
             BottomNavigationMenu(
                 selectedItem = BottomNavigationItem.PROFILE,
                 navController = navController
@@ -91,6 +103,20 @@ fun ProfileScreen(navController: NavController, vm: CAViewModel) {
         }
     }
 
+}
+
+suspend fun getCatImages(): List<CatImage> {
+    return CatApiClient.catApiService.getCatImages(limit = 1)
+}
+@Composable
+fun CatImageItem(catImage: CatImage) {
+    val painter = rememberImagePainter(data = catImage.url)
+
+    Image(
+        painter = painter,
+        contentDescription = "Cat Image",
+        modifier = Modifier.fillMaxWidth().height(200.dp)
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

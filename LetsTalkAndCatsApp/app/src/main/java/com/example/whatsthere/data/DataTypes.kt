@@ -1,5 +1,8 @@
 package com.example.whatsthere.data
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
 data class UserData(
     val userId: String? = "",
     val name: String? = "",
@@ -39,4 +42,10 @@ data class Status(
     val user: ChatUser = ChatUser(),
     val imageUrl: String? = "",
     val timestamp: Long? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class CatImage(
+    @Json(name = "id") val id: String,
+    @Json(name = "url") val url: String
 )
