@@ -3,6 +3,7 @@ package com.example.whatsthere.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.whatsthere.CAViewModel
@@ -69,7 +71,7 @@ fun ChatListScreen(navController: NavController, vm: CAViewModel) {
                         .fillMaxSize()
                         .padding(it)
                 ) {
-                    TitleText(txt = "Chats")
+                    TitleText(txt = "Twoje Czaty")
                     if (chats.isEmpty())
                         Column(
                             modifier = Modifier
@@ -78,7 +80,7 @@ fun ChatListScreen(navController: NavController, vm: CAViewModel) {
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(text = "No avaible chats")
+                            Text(text = "Nie posiadasz żadnego czatu. \nDodaj nowy przyciskiem na dole ekranu.", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                         }
                     else {
                         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -128,10 +130,10 @@ fun FAB(
                     onAddChat(addChatNumber.value)
                     addChatNumber.value = ""
                 }) {
-                    Text(text = "Add chat")
+                    Text(text = "Dodaj czat")
                 }
             },
-            title = { Text(text = "Add chat") },
+            title = { Text(text = "Dodaj czat") },
             text = {
                 OutlinedTextField(
                     value = addChatNumber.value,

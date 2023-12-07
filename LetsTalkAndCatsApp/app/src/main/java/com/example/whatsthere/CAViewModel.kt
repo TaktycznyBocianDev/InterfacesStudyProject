@@ -9,14 +9,12 @@ import com.example.whatsthere.data.COLLECTION_CHAT
 import com.example.whatsthere.data.COLLECTION_MESSAGES
 import com.example.whatsthere.data.COLLECTION_STATUS
 import com.example.whatsthere.data.COLLECTION_USER
-import com.example.whatsthere.data.CatImage
 import com.example.whatsthere.data.ChatData
 import com.example.whatsthere.data.ChatUser
 import com.example.whatsthere.data.Event
 import com.example.whatsthere.data.Message
 import com.example.whatsthere.data.Status
 import com.example.whatsthere.data.UserData
-import com.example.whatsthere.ui.CatApiClient.catApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
@@ -69,7 +67,7 @@ class CAViewModel @Inject constructor(
 
     fun onSignup(name: String, number: String, email: String, password: String){
         if (name.isEmpty() or number.isEmpty() or email.isEmpty() or password.isEmpty()){
-            handleException(customMessage = "Please fill in all fields to continue")
+            handleException(customMessage = "Proszę wypełnić wszystkie pola")
             return
         }
 
@@ -85,10 +83,10 @@ class CAViewModel @Inject constructor(
                                 //crate profile
                                 createOrUpdateProfile(name = name, number = number)
                             }else
-                                handleException(task.exception, "Sign up failed")
+                                handleException(customMessage = "Błąd połączenia z serwerem")
                         }
                 else
-                    handleException(customMessage = "Number already exist")
+                    handleException(customMessage = "Użytkownik z takim numerem telefonu już istnieje")
                 inProgress.value = false
             }
             .addOnFailureListener{
@@ -99,7 +97,7 @@ class CAViewModel @Inject constructor(
 
     fun onLogin(email: String, pass:String){
         if (email.isEmpty() or pass.isEmpty()){
-            handleException(customMessage = "Please fill in all fields")
+            handleException(customMessage = "Proszę uzupełnić wszystkie pola")
             return
         }
         inProgress.value = true
@@ -111,10 +109,10 @@ class CAViewModel @Inject constructor(
                     auth.currentUser?.uid?.let {
                         getUserData(it)
                     }
-                }else handleException(task.exception, "Login failed")
+                }else handleException(customMessage = "Brak połączenia z serwerem")
             }
             .addOnFailureListener {
-                handleException(it, "Login has failed")
+                handleException(customMessage = "Brak połączenia z serwerem")
             }
     }
 
@@ -147,7 +145,7 @@ class CAViewModel @Inject constructor(
                                 inProgress.value = false
                             }
                             .addOnFailureListener {
-                                handleException(it, "Cannot update user")
+                                handleException(customMessage = "Brak połączenia z serwerem")
                             }
                     }
                     else {
@@ -158,7 +156,7 @@ class CAViewModel @Inject constructor(
                     }
                 }
                 .addOnFailureListener {
-                    handleException(it, "Cannot retrevie user - no connection?")
+                    handleException(customMessage = "Brak połączenia z serwerem")
                 }
 
         }
@@ -174,7 +172,7 @@ class CAViewModel @Inject constructor(
         db.collection(COLLECTION_USER).document(uid)
             .addSnapshotListener { value, error ->
                 if (error != null){
-                    handleException(error, "Cannot retrieve user data")
+                    handleException(customMessage = "Brak połączenia z serwerem")
                 }
                 if (value != null){
                     val user = value.toObject<UserData>()
@@ -230,7 +228,7 @@ class CAViewModel @Inject constructor(
     }
 
     fun onAddChat(number: String){
-        if (number.isEmpty() or !number.isDigitsOnly()) handleException(customMessage = "Number must contain only digits")
+        if (number.isEmpty() or !number.isDigitsOnly()) handleException(customMessage = "Numer może składać się tylko z cyfr!")
         else{
             db.collection(COLLECTION_CHAT)
                 .where(
@@ -251,7 +249,7 @@ class CAViewModel @Inject constructor(
                         db.collection(COLLECTION_USER).whereEqualTo("number", number)
                             .get()
                             .addOnSuccessListener {
-                                if (it.isEmpty) handleException(customMessage = "Cannot fint user with this number")
+                                if (it.isEmpty) handleException(customMessage = "Nie znaleziono użytkownika!")
                                 else{
                                     val chatPartner = it.toObjects<UserData>()[0]
                                     val id = db.collection(COLLECTION_CHAT).document().id
@@ -278,7 +276,7 @@ class CAViewModel @Inject constructor(
                             }
                     }
                     else{
-                        handleException(customMessage = "Chat already exists!")
+                        handleException(customMessage = "Taki czat już istnieje!")
                     }
                 }
         }
@@ -391,9 +389,4 @@ class CAViewModel @Inject constructor(
             }
     }
 
-
-// For popUp error test
-//    init {
-//        handleException(customMessage = "Test")
-//    }
 }

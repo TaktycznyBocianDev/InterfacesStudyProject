@@ -2,7 +2,6 @@ package com.example.whatsthere.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -67,7 +66,7 @@ fun SignUpScreen(navController: NavController, vm: CAViewModel) {
             )
 
             Text(
-                text = "Signup",
+                text = "Stwórz konto",
                 modifier = Modifier.padding(8.dp),
                 fontSize = 30.sp,
                 fontFamily = FontFamily.SansSerif
@@ -77,14 +76,14 @@ fun SignUpScreen(navController: NavController, vm: CAViewModel) {
                 value = nameState.value,
                 onValueChange = { nameState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = { Text(text = "Name") }
+                label = { Text(text = "Imie") }
             )
 
             OutlinedTextField(
                 value = numberState.value,
                 onValueChange = { numberState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = { Text(text = "Number") }
+                label = { Text(text = "Numer telefonu") }
             )
 
             OutlinedTextField(
@@ -98,7 +97,7 @@ fun SignUpScreen(navController: NavController, vm: CAViewModel) {
                 value = passwordState.value,
                 onValueChange = { passwordState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = { Text(text = "Password") },
+                label = { Text(text = "Hasło") },
                 visualTransformation = PasswordVisualTransformation()
             )
 
@@ -116,12 +115,12 @@ fun SignUpScreen(navController: NavController, vm: CAViewModel) {
                 },
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(text = "SIGN UP NOW!")
+                Text(text = "ZAREJESTRUJ SIĘ!")
             }
 
 
             Text(
-                text = "Already a usser? Go to login now ->",
+                text = "Masz już konto? Kliknij, by się zalogować!",
                 color = Color.Blue,
                 modifier = Modifier
                     .padding(8.dp)

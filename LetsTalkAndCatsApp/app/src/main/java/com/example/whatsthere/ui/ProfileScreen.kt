@@ -89,6 +89,8 @@ fun ProfileScreen(navController: NavController, vm: CAViewModel) {
 
             )
 
+            //Kotek <3
+            CommonDivider()
             LazyColumn {
                 items(catImages) { catImage ->
                     CatImageItem(catImage)
@@ -115,7 +117,9 @@ fun CatImageItem(catImage: CatImage) {
     Image(
         painter = painter,
         contentDescription = "Cat Image",
-        modifier = Modifier.fillMaxWidth().height(200.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
     )
 }
 
@@ -147,8 +151,8 @@ fun ProfileContent(
         )
         {
 
-            Text(text = "Back", modifier = Modifier.clickable { onBack.invoke() })
-            Text(text = "Save", modifier = Modifier.clickable { onSave.invoke() })
+            Text(text = "Wstecz", modifier = Modifier.clickable { onBack.invoke() })
+            Text(text = "Zapis", modifier = Modifier.clickable { onSave.invoke() })
 
         }
 
@@ -164,7 +168,7 @@ fun ProfileContent(
                 .padding(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Name:", modifier = Modifier.width(100.dp))
+            Text(text = "Imie:", modifier = Modifier.width(100.dp))
             TextField(
                 value = name,
                 onValueChange = onNameChange,
@@ -181,7 +185,7 @@ fun ProfileContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(text = "Number:", modifier = Modifier.width(100.dp))
+            Text(text = "Numer:", modifier = Modifier.width(100.dp))
             TextField(
                 value = number,
                 onValueChange = onNumberChange,
@@ -193,14 +197,12 @@ fun ProfileContent(
 
         }
 
-        CommonDivider()
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp), horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = "Logout", modifier = Modifier.clickable { onLogout.invoke() })
+            Text(text = "Wyloguj się", modifier = Modifier.clickable { onLogout.invoke() })
 
         }
 
@@ -228,7 +230,7 @@ fun ProfileImage(imageUrl: String?, vm: CAViewModel) {
                 .fillMaxWidth()
                 .clickable {
 
-                           launcher.launch("image/*")
+                    launcher.launch("image/*")
 
                 },
             horizontalAlignment = Alignment.CenterHorizontally
@@ -242,7 +244,7 @@ fun ProfileImage(imageUrl: String?, vm: CAViewModel) {
                 CommonImage(data = imageUrl)
                 
             }
-            Text(text = "Change profile picture")
+            Text(text = "Zmień zdjęcie profilowe")
 
         }
 

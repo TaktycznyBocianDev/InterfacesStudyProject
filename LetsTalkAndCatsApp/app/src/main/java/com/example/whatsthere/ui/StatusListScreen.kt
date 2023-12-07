@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.whatsthere.CAViewModel
@@ -65,7 +66,7 @@ fun StatusListScreen(navController: NavController, vm: CAViewModel) {
                         .fillMaxSize()
                         .padding(it)
                 ) {
-                    TitleText(txt = "Status")
+                    TitleText(txt = "Relacje")
                     if (statuses.isEmpty())
                         Column(
                             modifier = Modifier
@@ -74,7 +75,7 @@ fun StatusListScreen(navController: NavController, vm: CAViewModel) {
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(text = "No statuses available")
+                            Text(text = "Brak dostępnych relacji. \nDodaj swoją przyciskiem na dole ekranu.", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                         }
                     else {
                         if (myStatuses.isNotEmpty()) {

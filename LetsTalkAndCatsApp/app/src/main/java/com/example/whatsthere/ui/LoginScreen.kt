@@ -1,13 +1,10 @@
 package com.example.whatsthere.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -33,7 +29,6 @@ import com.example.whatsthere.CAViewModel
 import com.example.whatsthere.CheckSignedIn
 import com.example.whatsthere.CommonProgressSpinner
 import com.example.whatsthere.DestinationScreen
-import com.example.whatsthere.R
 import com.example.whatsthere.navigateTo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +69,7 @@ fun LoginScreen(navController: NavController, vm: CAViewModel){
                 value = passwordState.value,
                 onValueChange = { passwordState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = { Text(text = "Password") },
+                label = { Text(text = "Hasło") },
                 visualTransformation = PasswordVisualTransformation()
             )
 
@@ -89,12 +84,12 @@ fun LoginScreen(navController: NavController, vm: CAViewModel){
                 },
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(text = "LOGIN")
+                Text(text = "LOGOWANIE")
             }
 
 
             Text(
-                text = "New here? Click here to sign-up!",
+                text = "Nowy tutaj? Zarejestruj się!",
                 color = Color.Blue,
                 modifier = Modifier
                     .padding(8.dp)
