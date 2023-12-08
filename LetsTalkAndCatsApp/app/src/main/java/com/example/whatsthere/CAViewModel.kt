@@ -70,6 +70,14 @@ class CAViewModel @Inject constructor(
             handleException(customMessage = "Proszę wypełnić wszystkie pola")
             return
         }
+        if (number.isEmpty() or !number.isDigitsOnly()){
+            handleException(customMessage = "Numer może składać się tylko z cyfr!")
+            return
+        }
+        if (password.length <= 5){
+            handleException(customMessage = "Hasło musi posiadać minimum 6 znaków.")
+            return
+        }
 
         inProgress.value = true
         db.collection(COLLECTION_USER).whereEqualTo("number", number)
@@ -83,14 +91,14 @@ class CAViewModel @Inject constructor(
                                 //crate profile
                                 createOrUpdateProfile(name = name, number = number)
                             }else
-                                handleException(customMessage = "Błąd połączenia z serwerem")
+                                handleException(customMessage = "Podany email jest nieprawidłowy.")
                         }
                 else
                     handleException(customMessage = "Użytkownik z takim numerem telefonu już istnieje")
                 inProgress.value = false
             }
             .addOnFailureListener{
-                handleException(it)
+                handleException(customMessage = "Brak połączenia z serwerem!")
             }
 
     }
@@ -109,10 +117,10 @@ class CAViewModel @Inject constructor(
                     auth.currentUser?.uid?.let {
                         getUserData(it)
                     }
-                }else handleException(customMessage = "Brak połączenia z serwerem")
+                }else handleException(customMessage = "Podane dane są nieprawidłowe.")
             }
             .addOnFailureListener {
-                handleException(customMessage = "Brak połączenia z serwerem")
+                handleException(customMessage = "Podane dane są nieprawidłowe.")
             }
     }
 
@@ -145,7 +153,7 @@ class CAViewModel @Inject constructor(
                                 inProgress.value = false
                             }
                             .addOnFailureListener {
-                                handleException(customMessage = "Brak połączenia z serwerem")
+                                handleException(customMessage = "Zapisanie zmian nieudane")
                             }
                     }
                     else {
@@ -156,7 +164,7 @@ class CAViewModel @Inject constructor(
                     }
                 }
                 .addOnFailureListener {
-                    handleException(customMessage = "Brak połączenia z serwerem")
+                    handleException(customMessage = "Nie udało się utworzyć konta")
                 }
 
         }
